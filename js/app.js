@@ -117,6 +117,8 @@ function AssignImageToCard(td_id ,icon){
         $('#'+td_id).children('div').children('img').remove();
         $('#'+td_id).children('div').prepend('<i></i>');
         $('#'+td_id).children('div').children('i').attr('class',icon);
+        $('#'+td_id).children('div').children('i').addClass('fonts_Icons');
+
 
 }
 
