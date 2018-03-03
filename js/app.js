@@ -7,7 +7,9 @@ function makeGrid() {
         
         $('#matrixCanvas').prepend('<tr></tr>');
         for (var width=0;width<widthSelected;width++){
-            $('#matrixCanvas').children('tr').first().prepend('<td><div class="rectangle"><img class="card_back "  height="100" width="100"></div></td>');
+            $('#matrixCanvas').children('tr').first().prepend('<td><div class="rectangle"><img class="card_back"  height="100" width="100"></div></td>');
+            //$('#matrixCanvas').children('tr').first().prepend('<td><div class="rectangle"><div class="card_back"  height="150" width="150"></div></div></td>');
+            //$('#matrixCanvas').children('tr').first().prepend('<td><div   height="150px" width="150px"></div></td>');
             $('#matrixCanvas').children('tr').first().children('td').first().attr("id" , "position_" +indexForPosition );
             indexForPosition++;
         }
@@ -27,8 +29,17 @@ $('#matrixCanvas').on( 'click', function( evt ) {
     //let positionsForImages=selectPosition();
     //At this point we need to see what position did we clicked .
     //we need to get the td id=position_13 so it will be position 13 
+    let positionsForImages=selectPosition();
+    //get the id of the clicked element position_12 or position_1
+    let idOfElementClicked=$(target).parents('td').attr('id');
+    let id=idOfElementClicked.slice(9,idOfElementClicked.length);
+    //Get the icon that goes in that elemenet
+    let iconName=positionsForImages[id];
+    //call the method to set the image 
+    AssignImageToCard(idOfElementClicked,iconName);
     $(target).css( 'background-color', color );
 });
+
 document.addEventListener("DOMContentLoaded", function(event) { 
     //do work
   });
@@ -84,7 +95,34 @@ function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
 }
 
+function AssignImageToCards(positionForImagenArray){
+         let all_td_elements=document.getElementsByTagName('td');
+         let all_td_elementsJQ=$('td');
+         
+         //Jquery iteration
+         $('td').each(function (index,value){
+            
+             let imgElement=$(this).children();
+             let imgElementGranChildren=imgElement.children('img');
+             $(imgElementGranChildren).addClass("ion-bug card_back fontSize" );
+             let stop= 'stop';
+
+         });
+
+
+}
+
+function AssignImageToCard(td_id ,icon){
+        //Given the id of the td , set the image 
+        $('#'+td_id).children('div').children('img').remove();
+        $('#'+td_id).children('div').prepend('<i></i>');
+        $('#'+td_id).children('div').children('i').attr('class',icon);
+
+}
 
 
 makeGrid();
-let positionsForImages=selectPosition();
+//let positionsForImages=selectPosition();
+//before allow the client to click we need to load the images that has been randomly selected in selectPosition()
+//to the position.
+//AssignImageToCards(positionsForImages);

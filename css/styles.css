@@ -1,3 +1,11 @@
 .card_back{
       background-color: black;
 }
+
+div{
+    background-color: aliceblue;
+}
+
+.fontSize{
+    font-size: 2em;
+}
