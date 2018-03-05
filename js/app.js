@@ -22,21 +22,47 @@ function makeGrid() {
 // }
 
 $('#matrixCanvas').on( 'click', function( evt ) {
-    let target=evt.target;
+    let target=$(evt.target);
     //target should be <img>
     let color="red";
     //We get an array of 16 elementes each elemnet wil by an ion-icon 
     //let positionsForImages=selectPosition();
     //At this point we need to see what position did we clicked .
     //we need to get the td id=position_13 so it will be position 13 
-    let positionsForImages=selectPosition();
+    //let positionsForImages=selectPosition();
     //get the id of the clicked element position_12 or position_1
     let idOfElementClicked=$(target).parents('td').attr('id');
     let id=idOfElementClicked.slice(9,idOfElementClicked.length);
     //Get the icon that goes in that elemenet
     let iconName=positionsForImages[id];
+    //If we have already Assige an Image to this position , please do nothing
+    let myPartnerPosition=GetMyPartnertPosition(id);
+    //isThereAniconInThisPosition(id) thet when we click the target is an <i> if not it is an <img>
     //call the method to set the image 
-    AssignImageToCard(idOfElementClicked,iconName);
+    if ( target.is( "img" ) ) {
+        AssignImageToCard(idOfElementClicked,iconName);
+        if (isMyPartnerFacingUp(myPartnerPosition)){
+            //make some squizz as it is a match 
+            //leave both of us facing up
+            let stop=0;
+        }
+        else{
+            let stop=1;
+        }
+        
+        //let { match , AtWhatPosition} =doWeHaveAMatch(idOfElementClicked,iconName);
+            //keep both image up 
+        
+        // else if (doWeHaveOthersCardsFacingUp){
+        //     //if this is the only imaging facing up do nothing
+        // }
+        // else if (isThisTheFristCardFacingUp){
+
+        // }
+
+        //target.children().toggle();
+    }
+    //AssignImageToCard(idOfElementClicked,iconName);
     $(target).css( 'background-color', color );
 });
 
@@ -44,14 +70,51 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //do work
   });
 
+function doWeHaveAMatch(id ,icon){
+    //$('#'+id).children('div').children()
+    let match=false;
+    let position=-1; 
+    let all_td_Elements=$('td');
+    for (let element of all_td_Elements) {
+
+
+    }  
+
+    return {mtach , position}; 
+}
+
+function GetMyPartnertPosition(myPosition){
+    let result=-1;//We do not have a match and this will be an error !!!
+    let counter=0;
+    let myIcon=positionsForImages[myPosition];
+    for (let image of positionsForImages)
+    {
+        if ((image==myIcon) && (myPosition!=counter)){
+            return counter;
+        }
+        counter++;
+
+    }
+    return result;
+}
+
+function isMyPartnerFacingUp( myPartnerPosition)
+{
+    //$('#'+myPartnerPosition).children('div').children('i').length>0 ? true: false;
+    let myPartnerDiv=$('#position_'+myPartnerPosition).children('div');
+    let myPartnerI=$(myPartnerDiv.children('i')).length;
+    myPartnerI>0? true : false ;
+}
+
 
 function selectPosition(){
+    //We will randomly select from all the icons , 8 of them to set them in the 16 square grid
     let heightSelected=4;
     let widthSelected=4;
     let numberOfImages=widthSelected*heightSelected/2;
     let range=[];
     let result=[];
-    var selectedIcons=["ion-trophy" ,"ion-earth" ,"ion-plane" ,"ion-videocamera","ion-beer","ion-help-buoy","ion-soup-can","ion-bug", "ion-umbrella" ,"ion-planet" , "ion-cash" ];
+    var selectedIcons=["ion-trophy" ,"ion-earth" ,"ion-plane" ,"ion-videocamera","ion-beer","ion-help-buoy","ion-soup-can","ion-bug", "ion-umbrella" ,"ion-planet" , "ion-cash" ,"ion-lightbulb" ,"ion-leaf" ,"ion-model-s"];
     
     for (var height=0;height<(heightSelected*widthSelected);height++){
             //This will create an array containing  the quantity of picture in the grid 
@@ -124,7 +187,7 @@ function AssignImageToCard(td_id ,icon){
 
 
 makeGrid();
-//let positionsForImages=selectPosition();
+let positionsForImages=selectPosition();
 //before allow the client to click we need to load the images that has been randomly selected in selectPosition()
 //to the position.
 //AssignImageToCards(positionsForImages);
