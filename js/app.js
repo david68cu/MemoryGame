@@ -7,7 +7,8 @@ function makeGrid() {
         
         $('#matrixCanvas').prepend('<tr></tr>');
         for (var width=0;width<widthSelected;width++){
-            $('#matrixCanvas').children('tr').first().prepend('<td><div class="rectangle"><img class="card_back"  height="100" width="100"></div></td>');
+            //$('#matrixCanvas').children('tr').first().prepend('<td><div class="rectangle"><img class="card_back"  height="100" width="100"></div></td>');
+            $('#matrixCanvas').children('tr').first().prepend('<td><div class="rectangle"><img class="card_back"></div></td>');
             //$('#matrixCanvas').children('tr').first().prepend('<td><div class="rectangle"><div class="card_back"  height="150" width="150"></div></div></td>');
             //$('#matrixCanvas').children('tr').first().prepend('<td><div   height="150px" width="150px"></div></td>');
             $('#matrixCanvas').children('tr').first().children('td').first().attr("id" , "position_" +indexForPosition );
@@ -23,6 +24,7 @@ function makeGrid() {
 
 $('#matrixCanvas').on( 'click', function( evt ) {
     let target=$(evt.target);
+    
     //target should be <img>
     let color="red";
     //We get an array of 16 elementes each elemnet wil by an ion-icon 
@@ -36,19 +38,63 @@ $('#matrixCanvas').on( 'click', function( evt ) {
     //Get the icon that goes in that elemenet
     let iconName=positionsForImages[id];
     //If we have already Assige an Image to this position , please do nothing
-    let myPartnerPosition=GetMyPartnertPosition(id);
+    let myPartnerPosition=GetMyPartnerPosition(id);
+
+    let hasMyPartnerBeenClicked=($(target).parents('td').attr('id')=='position_'+myPartnerPosition )? true : false ;
     //isThereAniconInThisPosition(id) thet when we click the target is an <i> if not it is an <img>
     //call the method to set the image 
     if ( target.is( "img" ) ) {
-        AssignImageToCard(idOfElementClicked,iconName);
-        if (isMyPartnerFacingUp(myPartnerPosition)){
-            //make some squizz as it is a match 
-            //leave both of us facing up
-            let stop=0;
+        let quantityOfCardFacingUp=NumbersOfCardsFacingUp();
+        switch (quantityOfCardFacingUp%2){
+            case 0:
+                //This is teh first card of a posible pair.Face it up
+                AssignImageToCard(idOfElementClicked,iconName);
+                break;
+            case 1:
+            //there is already one possible partner .let see if it is indeed a match
+                if (isThePriorFacedUpCartMyPartner(lastCardTurnedUp,id)){
+                    //We have a match so turn it up and do something else
+                    AssignImageToCard(idOfElementClicked,iconName);
+                    //Set our background to red .We matched!!
+                    setBackgroundColorToRed(lastCardTurnedUp,id);
+                } 
+                else{
+                    //We do not have a match so do not turning me up 
+                    //And turn the card before me that was looking for a partner to black
+                    imageNode=$('<img class="card_back" height="100" width="100"> </img>');
+                    $('#position_'+lastCardTurnedUp).children('div').children('i').remove();
+                    $('#position_'+lastCardTurnedUp).children('div').prepend(imageNode);
+                    //Also I do not need the prior card for anything 
+                }
+
+                
+
         }
-        else{
-            let stop=1;
-        }
+
+        // AssignImageToCard(idOfElementClicked,iconName);
+        // if (isMyPartnerFacingUp(myPartnerPosition)){
+        //     //make some squizz as it is a match 
+        //     //leave both of us facing up
+        //     //for example make us both background red
+        //     //$(target).css( 'background-color', color );
+        //     let stop=0;
+        // }
+        // else if (!amITheOnlyCardFacingUp(idOfElementClicked,iconName)){
+        //     //Turn me down as I am not teh first card and there is no macth for me so 
+        //     //it is a loss
+        //     //apply class card_back to target
+        //     //remove child <i> , add child img with card_back class
+        //     //recall teh  target is an img 
+        //     //NEED TO FIX THIS 
+        //     imageNode=$('<img class="card_back" height="100" width="100"> </img>');
+        //     $('#position_'+id).children('div').children('i').remove();
+        //     $('#position_'+id).children('div').prepend(imageNode);
+
+        //     // $('#position_'+myPartnerPosition).children('div').children('i').remove();
+        //     // $('#position_'+myPartnerPosition).children('div').prepend(imageNode);
+            
+
+        // }
         
         //let { match , AtWhatPosition} =doWeHaveAMatch(idOfElementClicked,iconName);
             //keep both image up 
@@ -62,13 +108,54 @@ $('#matrixCanvas').on( 'click', function( evt ) {
 
         //target.children().toggle();
     }
+    lastCardTurnedUp=id;
     //AssignImageToCard(idOfElementClicked,iconName);
-    $(target).css( 'background-color', color );
+    
+    //$(target).css( 'background-color', color );
 });
 
 document.addEventListener("DOMContentLoaded", function(event) { 
     //do work
   });
+
+function setBackgroundColorToRed(id,idPartner){
+    $('#position_'+id).children('div').children('i').addClass('red_background');
+    $('#position_'+idPartner).children('div').children('i').addClass('red_background');
+}
+
+function amITheOnlyCardFacingUp(idOfElementClicked,iconName){
+    let all_tr=$('#matrixCanvas').children('tr');
+    let counter=0;
+    for (let tr of all_tr){
+        let all_td=$(tr).children('td');
+        for (let td of all_td){
+            let div=$(td).children();
+            if ($(div).children('i').length>0)
+            {
+              counter++
+             }
+        }
+        
+    } 
+    return counter==1? true : false ;
+
+}
+
+function NumbersOfCardsFacingUp(){
+    let all_tr=$('#matrixCanvas').children('tr');
+    let counter=0;
+    for (let tr of all_tr){
+        let all_td=$(tr).children('td');
+        for (let td of all_td){
+            let div=$(td).children();
+            if ($(div).children('i').length>0)
+            {
+              counter++
+             }
+        }
+    }
+    return counter;
+}
 
 function doWeHaveAMatch(id ,icon){
     //$('#'+id).children('div').children()
@@ -83,7 +170,7 @@ function doWeHaveAMatch(id ,icon){
     return {mtach , position}; 
 }
 
-function GetMyPartnertPosition(myPosition){
+function GetMyPartnerPosition(myPosition){
     let result=-1;//We do not have a match and this will be an error !!!
     let counter=0;
     let myIcon=positionsForImages[myPosition];
@@ -105,6 +192,13 @@ function isMyPartnerFacingUp( myPartnerPosition)
     let myPartnerI=$(myPartnerDiv.children('i')).length;
     myPartnerI>0? true : false ;
 }
+
+function isThePriorFacedUpCartMyPartner(lastCardTurnedUp_Id, myId){
+      let myPartnerPosition=GetMyPartnerPosition(myId);
+      return (myPartnerPosition==lastCardTurnedUp_Id) ? true : false;
+}
+
+
 
 
 function selectPosition(){
@@ -181,11 +275,9 @@ function AssignImageToCard(td_id ,icon){
         $('#'+td_id).children('div').prepend('<i></i>');
         $('#'+td_id).children('div').children('i').attr('class',icon);
         $('#'+td_id).children('div').children('i').addClass('fonts_Icons');
-
-
 }
 
-
+var lastCardTurnedUp=-1;
 makeGrid();
 let positionsForImages=selectPosition();
 //before allow the client to click we need to load the images that has been randomly selected in selectPosition()

@@ -1,10 +1,12 @@
 .card_back{
       background-color: black;
+       width: 160px;
+       height: 160px;
 }
 
-div{
-    background-color: aliceblue;
-}
+i{
+    display: block;
+} 
 
 .fontSize{
     font-size: 2em;
@@ -12,4 +14,17 @@ div{
 
 .fonts_Icons{
     font-size: 10em;
+    text-align: center;
+    width: 100%;
+}
+
+.red_background{
+    background-color: red;
+    width: 160px;
+    height: 160px;
+}
+
+.rectangle{
+    width: 160px;
+    height: 160px;
 }
