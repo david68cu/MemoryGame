@@ -46,7 +46,7 @@ table {
 
 .ui-widget-content {
     background: #F9F9F9;
-    border: 1px solid #90d93f;
+    border: 1px solid #cf7744;
     color: #222222;
 }
 
@@ -72,7 +72,7 @@ table {
 }
 
 .ui-widget-header {
-    background: #b0de78;
+    background: #cf7744;
     border: 0;
     color: #fff;
     font-weight: normal;
