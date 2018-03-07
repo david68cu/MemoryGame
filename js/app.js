@@ -18,9 +18,7 @@ function makeGrid() {
     }
 }
 
-// function sourceOfIcosn(){
-//     var selectedIcons=["ion-trophy" ,"ion-earth" ,"ion-plane" ,"ion-videocamera","ion-beer","ion-help-buoy","ion-soup-can","ion-bug"];
-// }
+
 
 $('#matrixCanvas').on( 'click', function( evt ) {
     let target=$(evt.target);
@@ -47,7 +45,7 @@ $('#matrixCanvas').on( 'click', function( evt ) {
         let quantityOfCardFacingUp=NumbersOfCardsFacingUp();
         switch (quantityOfCardFacingUp%2){
             case 0:
-                //This is teh first card of a posible pair.Face it up
+                //This is the first card of a posible pair.Face it up
                 AssignImageToCard(idOfElementClicked,iconName);
                 break;
             case 1:
@@ -57,6 +55,9 @@ $('#matrixCanvas').on( 'click', function( evt ) {
                     AssignImageToCard(idOfElementClicked,iconName);
                     //Set our background to red .We matched!!
                     setBackgroundColorToRed(lastCardTurnedUp,id);
+                    if (haveYouWon()){
+                        victoryMessage();
+                    }
                 } 
                 else{
                     //We do not have a match so do not turning me up 
@@ -70,53 +71,40 @@ $('#matrixCanvas').on( 'click', function( evt ) {
                 
 
         }
-
-        // AssignImageToCard(idOfElementClicked,iconName);
-        // if (isMyPartnerFacingUp(myPartnerPosition)){
-        //     //make some squizz as it is a match 
-        //     //leave both of us facing up
-        //     //for example make us both background red
-        //     //$(target).css( 'background-color', color );
-        //     let stop=0;
-        // }
-        // else if (!amITheOnlyCardFacingUp(idOfElementClicked,iconName)){
-        //     //Turn me down as I am not teh first card and there is no macth for me so 
-        //     //it is a loss
-        //     //apply class card_back to target
-        //     //remove child <i> , add child img with card_back class
-        //     //recall teh  target is an img 
-        //     //NEED TO FIX THIS 
-        //     imageNode=$('<img class="card_back" height="100" width="100"> </img>');
-        //     $('#position_'+id).children('div').children('i').remove();
-        //     $('#position_'+id).children('div').prepend(imageNode);
-
-        //     // $('#position_'+myPartnerPosition).children('div').children('i').remove();
-        //     // $('#position_'+myPartnerPosition).children('div').prepend(imageNode);
-            
-
-        // }
-        
-        //let { match , AtWhatPosition} =doWeHaveAMatch(idOfElementClicked,iconName);
-            //keep both image up 
-        
-        // else if (doWeHaveOthersCardsFacingUp){
-        //     //if this is the only imaging facing up do nothing
-        // }
-        // else if (isThisTheFristCardFacingUp){
-
-        // }
-
-        //target.children().toggle();
     }
     lastCardTurnedUp=id;
-    //AssignImageToCard(idOfElementClicked,iconName);
-    
-    //$(target).css( 'background-color', color );
+  
 });
 
-document.addEventListener("DOMContentLoaded", function(event) { 
-    //do work
-  });
+// $('#modal_CloseBtn').on('click', function(evt) {
+//     //evt.preventDefault()
+
+//     $('#victoryModalDialog').close;
+    
+// });
+
+
+function haveYouWon(){
+    let cardsUp=NumbersOfCardsFacingUp();
+    return (cardsUp===16) ? true : false ;
+}
+
+function victoryMessage(){
+    //Without jQuery
+    //let dialog=document.querySelector('#victoryModalDialog');
+    //dialog.showModal();
+    $('#victoryModalDialog').dialog({
+        show: {
+            effect: "blind",
+            duration: 1000
+          },
+          hide: {
+            effect: "explode",
+            duration: 1000
+          }
+    });
+    
+}
 
 function setBackgroundColorToRed(id,idPartner){
     $('#position_'+id).children('div').children('i').addClass('red_background');
@@ -132,7 +120,7 @@ function amITheOnlyCardFacingUp(idOfElementClicked,iconName){
             let div=$(td).children();
             if ($(div).children('i').length>0)
             {
-              counter++
+              counter++;
              }
         }
         
@@ -150,24 +138,11 @@ function NumbersOfCardsFacingUp(){
             let div=$(td).children();
             if ($(div).children('i').length>0)
             {
-              counter++
+              counter++;
              }
         }
     }
     return counter;
-}
-
-function doWeHaveAMatch(id ,icon){
-    //$('#'+id).children('div').children()
-    let match=false;
-    let position=-1; 
-    let all_td_Elements=$('td');
-    for (let element of all_td_Elements) {
-
-
-    }  
-
-    return {mtach , position}; 
 }
 
 function GetMyPartnerPosition(myPosition){
@@ -190,7 +165,7 @@ function isMyPartnerFacingUp( myPartnerPosition)
     //$('#'+myPartnerPosition).children('div').children('i').length>0 ? true: false;
     let myPartnerDiv=$('#position_'+myPartnerPosition).children('div');
     let myPartnerI=$(myPartnerDiv.children('i')).length;
-    myPartnerI>0? true : false ;
+    return (myPartnerI>0) ? true : false ;
 }
 
 function isThePriorFacedUpCartMyPartner(lastCardTurnedUp_Id, myId){
@@ -280,6 +255,4 @@ function AssignImageToCard(td_id ,icon){
 var lastCardTurnedUp=-1;
 makeGrid();
 let positionsForImages=selectPosition();
-//before allow the client to click we need to load the images that has been randomly selected in selectPosition()
-//to the position.
-//AssignImageToCards(positionsForImages);
+var modalCloseBtn=document.getElementById('modal_CloseBtn');
