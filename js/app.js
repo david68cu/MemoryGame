@@ -125,26 +125,6 @@ function setStars(moves){
         setNumberOfStars(1);
     }
 
-    // switch(moves){
-    //     case (moves<=7):
-            
-    //     case ((moves>=8) || moves<=12)):
-    //         setNumberOfStars(5);
-    //         break;
-    //     case ((moves>=13 ) || moves<=15):
-    //         setNumberOfStars(4);
-    //         break;
-    //     case ((moves>=16 ) || moves<=18):
-    //         setNumberOfStars(3);
-    //          break;
-    //     case ((moves>=19 ) || moves<=21):
-    //         setNumberOfStars(2);
-    //         break;
-    //     case (moves>=22):
-    //           setNumberOfStars(1);
-    //           break;
-
-    // }
 }
 
 function setNumberOfStars(stars){
@@ -169,7 +149,7 @@ function setNumberOfStars(stars){
                     }
                     break;
                 case (2):
-                    //let counter=0;
+                    
                     for (let span of all_spans){
                         if (counter<2){
                             span.outerHTML='<span class="fa fa-star checked"></span>';
@@ -178,7 +158,7 @@ function setNumberOfStars(stars){
                     }
                     break;
                 case (3):
-                //let counter=0;
+                
                     for (let span of all_spans){
                         if (counter<3){
                             span.outerHTML='<span class="fa fa-star checked"></span>';
@@ -187,7 +167,7 @@ function setNumberOfStars(stars){
                     }
                     break;
                 case (4):
-                //let counter=0;
+                
                     for (let span of all_spans){
                         if (counter<4){
                             span.outerHTML='<span class="fa fa-star checked"></span>';
@@ -197,7 +177,6 @@ function setNumberOfStars(stars){
                     break;
                 case (5):
                     for (let span of all_spans){
-                        //span.addClass('checked');
                         span.outerHTML='<span class="fa fa-star checked"></span>';
                     }
                     break;
