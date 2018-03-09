@@ -126,3 +126,17 @@ text-indent : -99999px;
 overflow : hidden;
 background-repeat : no-repeat;
 }
+
+.score-panel{
+text-align: center;
+}
+
+.checked {
+    color: orange;
+}
+
+
+.stars{
+    text-align: center;
+}
+
