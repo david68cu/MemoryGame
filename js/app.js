@@ -23,8 +23,10 @@ function makeGrid() {
 $('#matrixCanvas').on( 'click', function( evt ) {
     
     let target=$(evt.target);
-    if (target.is('img')){
-        //target should be <img>
+    //target should be <img>
+    if (target.is("img")){
+        //Increase the number of clicks
+    
         let color="red";
         //We get an array of 16 elementes each elemnet wil by an ion-icon 
         //let positionsForImages=selectPosition();
@@ -48,6 +50,7 @@ $('#matrixCanvas').on( 'click', function( evt ) {
                 case 0:
                     //This is the first card of a posible pair.Face it up
                     AssignImageToCard(idOfElementClicked,iconName);
+                    increaseMoves();
                     break;
                 case 1:
                 //there is already one possible partner .let see if it is indeed a match
@@ -55,8 +58,10 @@ $('#matrixCanvas').on( 'click', function( evt ) {
                         //We have a match so turn it up and do something else
                         AssignImageToCard(idOfElementClicked,iconName);
                         //Set our background to red .We matched!!
+                        increaseMoves();
                         setBackgroundColorToRed(lastCardTurnedUp,id);
                         if (haveYouWon()){
+                            setStars(numberOfMoves);
                             victoryMessage();
                         }
                     } 
@@ -67,15 +72,138 @@ $('#matrixCanvas').on( 'click', function( evt ) {
                         $('#position_'+lastCardTurnedUp).children('div').children('i').remove();
                         $('#position_'+lastCardTurnedUp).children('div').prepend(imageNode);
                         //Also I do not need the prior card for anything 
+                        increaseMoves();
                     }
+            
 
                     
 
             }
+
         }
         lastCardTurnedUp=id;
     } 
 });
+
+
+$('#restartIcon').on( 'click', function( evt ) {
+       numberOfMoves=0;
+       setMoves(0);
+       setStars(0);
+       window.location.reload();
+});
+
+function increaseMoves(){
+    numberOfMoves++;
+    setMoves(numberOfMoves);
+}
+
+function setMoves(moves){
+    $('#numberOfMoves').text(moves);
+}
+
+function setStars(moves){
+
+    if (moves<=15) {
+        setNumberOfStars(0);
+        
+    }
+    else if ((moves>=16 && moves<=25)){
+        setNumberOfStars(5);
+    }
+
+    else if ((moves>=26 && moves<=35)){
+        setNumberOfStars(4);
+    }
+    else if ((moves>=36 && moves<=47)){
+        setNumberOfStars(3);
+    }
+    else if ((moves>=48 && moves<=55)){
+        setNumberOfStars(2);
+    }
+    else {
+        setNumberOfStars(1);
+    }
+
+    // switch(moves){
+    //     case (moves<=7):
+            
+    //     case ((moves>=8) || moves<=12)):
+    //         setNumberOfStars(5);
+    //         break;
+    //     case ((moves>=13 ) || moves<=15):
+    //         setNumberOfStars(4);
+    //         break;
+    //     case ((moves>=16 ) || moves<=18):
+    //         setNumberOfStars(3);
+    //          break;
+    //     case ((moves>=19 ) || moves<=21):
+    //         setNumberOfStars(2);
+    //         break;
+    //     case (moves>=22):
+    //           setNumberOfStars(1);
+    //           break;
+
+    // }
+}
+
+function setNumberOfStars(stars){
+       let all_spans=$('#starsId').children('span');
+       let counter=0;
+
+            switch(stars){
+                case (0):
+                    for (let span of all_spans){
+                        //span.addClass('checked');
+                        span.outerHTML='<span class="fa fa-star"></span>';
+                        
+                    }
+                    break;
+                case (1):
+                    
+                    for (let span of all_spans){
+                        if (counter<1){
+                            span.outerHTML='<span class="fa fa-star checked"></span>';
+                            counter++;
+                        }
+                    }
+                    break;
+                case (2):
+                    //let counter=0;
+                    for (let span of all_spans){
+                        if (counter<2){
+                            span.outerHTML='<span class="fa fa-star checked"></span>';
+                            counter++;
+                        }
+                    }
+                    break;
+                case (3):
+                //let counter=0;
+                    for (let span of all_spans){
+                        if (counter<3){
+                            span.outerHTML='<span class="fa fa-star checked"></span>';
+                            counter++;
+                        }
+                    }
+                    break;
+                case (4):
+                //let counter=0;
+                    for (let span of all_spans){
+                        if (counter<4){
+                            span.outerHTML='<span class="fa fa-star checked"></span>';
+                            counter++;
+                        }
+                    }
+                    break;
+                case (5):
+                    for (let span of all_spans){
+                        //span.addClass('checked');
+                        span.outerHTML='<span class="fa fa-star checked"></span>';
+                    }
+                    break;
+            }
+        
+}
 
 // $('#modal_CloseBtn').on('click', function(evt) {
 //     //evt.preventDefault()
@@ -254,6 +382,8 @@ function AssignImageToCard(td_id ,icon){
 }
 
 var lastCardTurnedUp=-1;
+var numberOfMoves=0;
+setStars(0);
 makeGrid();
 let positionsForImages=selectPosition();
 var modalCloseBtn=document.getElementById('modal_CloseBtn');

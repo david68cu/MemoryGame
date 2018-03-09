@@ -27,8 +27,8 @@
     <div class="container">
    
         <section class="score-panel">
-            
-                <section class="stars">
+
+                <section id='starsId' class="stars">
                         <span class="fa fa-star checked"></span>
                         <span class="fa fa-star checked"></span>
                         <span class="fa fa-star checked"></span>
@@ -36,16 +36,17 @@
                         <span class="fa fa-star"></span>
                 </section>
 
-                <span class="moves">3</span> Moves
+                <span id="numberOfMoves" class="moves">0</span> Moves
 
                 <div class="restart">
-                    <i class="fa fa-repeat"></i>
+                    <i id="restartIcon" class="fa fa-repeat"></i>
                 </div>
         </section> 
 
         <table id="matrixCanvas"></table>
 
         <dialog id="victoryModalDialog" title="Victory.">
+                     
                     <p>You have won!!!!</p>
                     
         </dialog>
