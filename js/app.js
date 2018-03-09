@@ -21,59 +21,60 @@ function makeGrid() {
 
 
 $('#matrixCanvas').on( 'click', function( evt ) {
-    let target=$(evt.target);
     
-    //target should be <img>
-    let color="red";
-    //We get an array of 16 elementes each elemnet wil by an ion-icon 
-    //let positionsForImages=selectPosition();
-    //At this point we need to see what position did we clicked .
-    //we need to get the td id=position_13 so it will be position 13 
-    //let positionsForImages=selectPosition();
-    //get the id of the clicked element position_12 or position_1
-    let idOfElementClicked=$(target).parents('td').attr('id');
-    let id=idOfElementClicked.slice(9,idOfElementClicked.length);
-    //Get the icon that goes in that elemenet
-    let iconName=positionsForImages[id];
-    //If we have already Assige an Image to this position , please do nothing
-    let myPartnerPosition=GetMyPartnerPosition(id);
+    let target=$(evt.target);
+    if (target.is('img')){
+        //target should be <img>
+        let color="red";
+        //We get an array of 16 elementes each elemnet wil by an ion-icon 
+        //let positionsForImages=selectPosition();
+        //At this point we need to see what position did we clicked .
+        //we need to get the td id=position_13 so it will be position 13 
+        //let positionsForImages=selectPosition();
+        //get the id of the clicked element position_12 or position_1
+        let idOfElementClicked=$(target).parents('td').attr('id');
+        let id=idOfElementClicked.slice(9,idOfElementClicked.length);
+        //Get the icon that goes in that elemenet
+        let iconName=positionsForImages[id];
+        //If we have already Assige an Image to this position , please do nothing
+        let myPartnerPosition=GetMyPartnerPosition(id);
 
-    let hasMyPartnerBeenClicked=($(target).parents('td').attr('id')=='position_'+myPartnerPosition )? true : false ;
-    //isThereAniconInThisPosition(id) thet when we click the target is an <i> if not it is an <img>
-    //call the method to set the image 
-    if ( target.is( "img" ) ) {
-        let quantityOfCardFacingUp=NumbersOfCardsFacingUp();
-        switch (quantityOfCardFacingUp%2){
-            case 0:
-                //This is the first card of a posible pair.Face it up
-                AssignImageToCard(idOfElementClicked,iconName);
-                break;
-            case 1:
-            //there is already one possible partner .let see if it is indeed a match
-                if (isThePriorFacedUpCartMyPartner(lastCardTurnedUp,id)){
-                    //We have a match so turn it up and do something else
+        let hasMyPartnerBeenClicked=($(target).parents('td').attr('id')=='position_'+myPartnerPosition )? true : false ;
+        //isThereAniconInThisPosition(id) thet when we click the target is an <i> if not it is an <img>
+        //call the method to set the image 
+        if ( target.is( "img" ) ) {
+            let quantityOfCardFacingUp=NumbersOfCardsFacingUp();
+            switch (quantityOfCardFacingUp%2){
+                case 0:
+                    //This is the first card of a posible pair.Face it up
                     AssignImageToCard(idOfElementClicked,iconName);
-                    //Set our background to red .We matched!!
-                    setBackgroundColorToRed(lastCardTurnedUp,id);
-                    if (haveYouWon()){
-                        victoryMessage();
+                    break;
+                case 1:
+                //there is already one possible partner .let see if it is indeed a match
+                    if (isThePriorFacedUpCartMyPartner(lastCardTurnedUp,id)){
+                        //We have a match so turn it up and do something else
+                        AssignImageToCard(idOfElementClicked,iconName);
+                        //Set our background to red .We matched!!
+                        setBackgroundColorToRed(lastCardTurnedUp,id);
+                        if (haveYouWon()){
+                            victoryMessage();
+                        }
+                    } 
+                    else{
+                        //We do not have a match so do not turning me up 
+                        //And turn the card before me that was looking for a partner to black
+                        imageNode=$('<img class="card_back" height="100" width="100"> </img>');
+                        $('#position_'+lastCardTurnedUp).children('div').children('i').remove();
+                        $('#position_'+lastCardTurnedUp).children('div').prepend(imageNode);
+                        //Also I do not need the prior card for anything 
                     }
-                } 
-                else{
-                    //We do not have a match so do not turning me up 
-                    //And turn the card before me that was looking for a partner to black
-                    imageNode=$('<img class="card_back" height="100" width="100"> </img>');
-                    $('#position_'+lastCardTurnedUp).children('div').children('i').remove();
-                    $('#position_'+lastCardTurnedUp).children('div').prepend(imageNode);
-                    //Also I do not need the prior card for anything 
-                }
 
-                
+                    
 
+            }
         }
-    }
-    lastCardTurnedUp=id;
-  
+        lastCardTurnedUp=id;
+    } 
 });
 
 // $('#modal_CloseBtn').on('click', function(evt) {
