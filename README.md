@@ -11,9 +11,9 @@ If the second card you clicked is a match , them both cards will face up , and t
 
 If there is no match , the second card will no face up , and the first one will also face down.
 
-You should keep trying iuntil you have all your card facng up
+You should keep trying until you have all your card facing up.
 
 ##Help
-See the vide that will show you how to play the game
+See the video that will show you how to play the game
 
 

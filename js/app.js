@@ -23,26 +23,27 @@ function makeGrid() {
 $('#matrixCanvas').on( 'click', function( evt ) {
     
     let target=$(evt.target);
-    //target should be <img>
+    //We will follow the execution only if the user clicked on an <img> element.
+    //This way we avoid below code to exeucte for <table> or an already faced up element <i>.
     if (target.is("img")){
         //Increase the number of clicks
     
         let color="red";
-        //We get an array of 16 elementes each elemnet wil by an ion-icon 
+        //We get an array of 16 elements each element will be an ion-icon 
         //let positionsForImages=selectPosition();
         //At this point we need to see what position did we clicked .
-        //we need to get the td id=position_13 so it will be position 13 
+        //Example: We need to get the <td id=position_13>  so it will be position 13 
         //let positionsForImages=selectPosition();
         //get the id of the clicked element position_12 or position_1
         let idOfElementClicked=$(target).parents('td').attr('id');
         let id=idOfElementClicked.slice(9,idOfElementClicked.length);
-        //Get the icon that goes in that elemenet
+        //Get the icon that goes in that element
         let iconName=positionsForImages[id];
-        //If we have already Assige an Image to this position , please do nothing
+        //If we have already assign an Image to this position , please do nothing
         let myPartnerPosition=GetMyPartnerPosition(id);
 
         let hasMyPartnerBeenClicked=($(target).parents('td').attr('id')=='position_'+myPartnerPosition )? true : false ;
-        //isThereAniconInThisPosition(id) thet when we click the target is an <i> if not it is an <img>
+        //isThereAniconInThisPosition(id) then when we click the target it is an <i> if not it is an <img>
         //call the method to set the image 
         if ( target.is( "img" ) ) {
             let quantityOfCardFacingUp=NumbersOfCardsFacingUp();
@@ -128,68 +129,42 @@ function setStars(moves){
 }
 
 function setNumberOfStars(stars){
-       let all_spans=$('#starsId').children('span');
-       let counter=0;
+
 
             switch(stars){
                 case (0):
-                    for (let span of all_spans){
-                        //span.addClass('checked');
-                        span.outerHTML='<span class="fa fa-star"></span>';
-                        
-                    }
+                    setStarsNumberTo(0);
                     break;
                 case (1):
-                    
-                    for (let span of all_spans){
-                        if (counter<1){
-                            span.outerHTML='<span class="fa fa-star checked"></span>';
-                            counter++;
-                        }
-                    }
+                    setStarsNumberTo(1);
                     break;
                 case (2):
-                    
-                    for (let span of all_spans){
-                        if (counter<2){
-                            span.outerHTML='<span class="fa fa-star checked"></span>';
-                            counter++;
-                        }
-                    }
+                    setStarsNumberTo(2);
                     break;
                 case (3):
-                
-                    for (let span of all_spans){
-                        if (counter<3){
-                            span.outerHTML='<span class="fa fa-star checked"></span>';
-                            counter++;
-                        }
-                    }
+                    setStarsNumberTo(3);
                     break;
                 case (4):
-                
-                    for (let span of all_spans){
-                        if (counter<4){
-                            span.outerHTML='<span class="fa fa-star checked"></span>';
-                            counter++;
-                        }
-                    }
+                    setStarsNumberTo(4);
                     break;
                 case (5):
-                    for (let span of all_spans){
-                        span.outerHTML='<span class="fa fa-star checked"></span>';
-                    }
+                    setStarsNumberTo(5);
                     break;
             }
         
 }
 
-// $('#modal_CloseBtn').on('click', function(evt) {
-//     //evt.preventDefault()
-
-//     $('#victoryModalDialog').close;
-    
-// });
+function setStarsNumberTo(numberOfStars){
+    let all_spans=$('#starsId').children('span');
+    let counter=0;
+    for (let span of all_spans){
+      
+        if (counter<numberOfStars){
+            span.outerHTML='<span class="fa fa-star checked"></span>';
+            counter++;
+        }
+    }
+}
 
 
 function haveYouWon(){
