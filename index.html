@@ -18,8 +18,10 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 
+    <!--
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   
+    -->
+
     <title>Memory Game Project</title>
 </head>
 <body>
@@ -28,13 +30,13 @@
    
         <section class="score-panel">
 
-                <section id='starsId' class="stars">
+                <!-- <section id='starsId' class="stars">
                         <span class="fa fa-star"></span>
                         <span class="fa fa-star"></span>
                         <span class="fa fa-star"></span>
                         <span class="fa fa-star"></span>
                         <span class="fa fa-star"></span>
-                </section>
+                </section> -->
 
                 <span id="numberOfMoves" class="moves">0</span> Moves
 
@@ -45,10 +47,21 @@
 
         <table id="matrixCanvas"></table>
 
-        <dialog id="victoryModalDialog" title="Victory.">
+        <dialog id="victoryModalDialog" title="">
                      
-                    <p>You have won!!!!</p>
-                    
+                   <h3>Congratulations, you won.!!!</h3>
+                   <p>It took you <span id="elapsedTime">0</span> seconds  to complete the game.</p>
+                   <span id="numberOfMovesDialog" class="moves">0</span> Moves
+                   <section id="starsId" class="stars">
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </section>
+                   <p> Do you want to play again?</p>
+                   <button id="closeDialog">No</button> <button id="restartDialog" autofocus>Yes</button>
+
         </dialog>
         
     

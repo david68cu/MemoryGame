@@ -38,7 +38,33 @@ margin-left : auto;
 margin-right : auto;
 }
 
-.ui-widget {
+dialog {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+h3{
+    padding: 12px 20px;
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #434a54;
+}
+
+.score-panel{
+    text-align: center;
+}
+    
+.checked {
+    color: orange;
+}
+
+.stars{
+    text-align: center;
+}
+
+/* .ui-widget {
 font-family : Verdana, Arial, sans-serif;
 font-size : 0.8em;
 }
@@ -125,18 +151,7 @@ position : relative;
 text-indent : -99999px;
 overflow : hidden;
 background-repeat : no-repeat;
-}
-
-.score-panel{
-text-align: center;
-}
-
-.checked {
-    color: orange;
-}
+} */
 
 
-.stars{
-    text-align: center;
-}
 

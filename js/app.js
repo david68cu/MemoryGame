@@ -1,5 +1,7 @@
 function makeGrid() {
-    
+    //This function will dynamically create the table with all its elements <tr> <td>
+    //We also will dynamically assig id to each td element.Finally each td elemnet will be an <img> , a blac square
+
     let heightSelected=4;
     let widthSelected=4;
     let indexForPosition=0;
@@ -21,7 +23,13 @@ function makeGrid() {
 
 
 $('#matrixCanvas').on( 'click', function( evt ) {
+    //Let set up two timmers to measure how much it will take a player to finish the game
+    //StartTime will be set in the counter that set the number of clicks .As soon as we make teh first click , we will start this counter
     
+    //When we have won , we set the endTime
+    
+    
+
     let target=$(evt.target);
     //We will follow the execution only if the user clicked on an <img> element.
     //This way we avoid below code to exeucte for <table> or an already faced up element <i>.
@@ -47,9 +55,11 @@ $('#matrixCanvas').on( 'click', function( evt ) {
         //call the method to set the image 
         if ( target.is( "img" ) ) {
             let quantityOfCardFacingUp=NumbersOfCardsFacingUp();
+            
             switch (quantityOfCardFacingUp%2){
                 case 0:
-                    //This is the first card of a posible pair.Face it up
+                    //This is the first card of a posible pair.Face it up 
+                    //If we are here there are 0 , 2, 4, 6, 8 , 10 , 12 or 14 
                     AssignImageToCard(idOfElementClicked,iconName);
                     increaseMoves();
                     break;
@@ -62,7 +72,10 @@ $('#matrixCanvas').on( 'click', function( evt ) {
                         increaseMoves();
                         setBackgroundColorToRed(lastCardTurnedUp,id);
                         if (haveYouWon()){
+                            endTime=Date.now();
+                            var elapsedTime=endTime-startTime;
                             setStars(numberOfMoves);
+                            setTime(elapsedTime);
                             victoryMessage();
                         }
                     } 
@@ -94,13 +107,46 @@ $('#restartIcon').on( 'click', function( evt ) {
        window.location.reload();
 });
 
+$('#restartDialog').on( 'click', function( evt ) {
+    numberOfMoves=0;
+    setMoves(0);
+    setStars(0);
+    window.location.reload();
+});
+
+
+
+function victoryMessage(){
+    
+
+    //This is for normal HTML5 dialog. We can also use also show() in HTML5
+    let dialog = document.getElementById('victoryModalDialog');
+    //lets create an event for closing the dialog once the user select No
+    document.querySelector('#closeDialog').onclick = function() {
+         dialog.close();
+    };
+    //Show the HTML5 dialog in modal form 
+    dialog.showModal();
+}
+
+
+
 function increaseMoves(){
     numberOfMoves++;
+    if (numberOfMoves==1){startTime=Date.now();}
     setMoves(numberOfMoves);
 }
 
 function setMoves(moves){
+    
     $('#numberOfMoves').text(moves);
+    $('#numberOfMovesDialog').text(moves);
+
+}
+
+function setTime(time){
+    let seconds=time/1000;
+    $('#elapsedTime').text(seconds);
 }
 
 function setStars(moves){
@@ -164,7 +210,22 @@ function setStarsNumberTo(numberOfStars){
             counter++;
         }
     }
+    
+
 }
+
+// function setStarsNumberToXForElement(numberOfStars,element){
+//     let all_spans=$('#'+element).children('span');
+//     let counter=0;
+//     for (let span of all_spans){
+      
+//         if (counter<numberOfStars){
+//             span.outerHTML='<span class="fa fa-star checked"></span>';
+//             counter++;
+//         }
+//     }
+// }
+
 
 
 function haveYouWon(){
@@ -172,29 +233,14 @@ function haveYouWon(){
     return (cardsUp===16) ? true : false ;
 }
 
-function victoryMessage(){
-    //Without jQuery
-    //let dialog=document.querySelector('#victoryModalDialog');
-    //dialog.showModal();
-    $('#victoryModalDialog').dialog({
-        show: {
-            effect: "blind",
-            duration: 1000
-          },
-          hide: {
-            effect: "explode",
-            duration: 1000
-          }
-    });
-    
-}
+
 
 function setBackgroundColorToRed(id,idPartner){
     $('#position_'+id).children('div').children('i').addClass('red_background');
     $('#position_'+idPartner).children('div').children('i').addClass('red_background');
 }
 
-function amITheOnlyCardFacingUp(idOfElementClicked,iconName){
+function amITheOnlyCardFacingUp(){
     let all_tr=$('#matrixCanvas').children('tr');
     let counter=0;
     for (let tr of all_tr){
@@ -336,8 +382,8 @@ function AssignImageToCard(td_id ,icon){
 }
 
 var lastCardTurnedUp=-1;
+var startTime=0;
 var numberOfMoves=0;
 setStars(0);
 makeGrid();
 let positionsForImages=selectPosition();
-var modalCloseBtn=document.getElementById('modal_CloseBtn');
