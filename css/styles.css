@@ -1,15 +1,15 @@
 .card_back {
-    background-color : black;
-    width : 160px;
-    height : 160px;
-    }
+background-color : black;
+width : 160px;
+height : 160px;
+}
 
 i {
-    display : block;
+display : block;
 }
 
 .fontSize {
-    font-size : 2em;
+font-size : 2em;
 }
 
 .fonts_Icons {
@@ -39,69 +39,68 @@ margin-right : auto;
 }
 
 .site-dialog{
-    overflow: hidden;
-    width: 95%;
-    max-width: 500px;
-    padding: 0;
-    border-width: 0;
-    border-radius: 6px;
-    background: #fff;
-    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(0, 0, 0, 0.3);
+overflow: hidden;
+width: 95%;
+max-width: 500px;
+padding: 0;
+border-width: 0;
+border-radius: 6px;
+background: #fff;
+box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
+border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .dialog-header{
-    padding: 12px 20px;
-    background-color: #434a54;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-
+padding: 12px 20px;
+background-color: #434a54;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
 }
 
 .dialog-content{
-    margin: 12px 20px 20px; 
+margin: 12px 20px 20px; 
 }
 
 .dialog-btn-group{
-    margin: 0px; 
-    text-align: right;
-    background-color: #f5f6f8;
+margin: 0px; 
+text-align: right;
+background-color: #f5f6f8;
 }
 
 .btn{
-    padding: 10px 15px;
-    cursor: pointer;
-    color: #555;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 3px;
-    background-color: #f3f3f3;
-    margin-left: 10px;
-    margin-right: 20px;
+padding: 10px 15px;
+cursor: pointer;
+color: #555;
+border-width: 1px;
+border-style: solid;
+border-radius: 3px;
+background-color: #f3f3f3;
+margin-left: 10px;
+margin-right: 20px;
 }
 
 .btn-danger {
-    color: #fff;
-    border-color: #ab3326;
-    background-color: #c0392b;
-    float: right;
+color: #fff;
+border-color: #ab3326;
+background-color: #c0392b;
+float: right;
 }
 
 h3{
-    color: #fff;
-    margin: 0;
-    font-size: 16px;
+color: #fff;
+margin: 0;
+font-size: 16px;
 }
 
 .score-panel{
-    text-align: center;
+text-align: center;
 }
     
 .checked {
-    color: orange;
+color: orange;
 }
 
 .stars{
-    text-align: center;
+text-align: center;
 }
 

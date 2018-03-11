@@ -23,13 +23,7 @@ function makeGrid() {
 
 
 $('#matrixCanvas').on( 'click', function( evt ) {
-    //Let set up two timmers to measure how much it will take a player to finish the game
-    //StartTime will be set in the counter that set the number of clicks .As soon as we make teh first click , we will start this counter
-    
-    //When we have won , we set the endTime
-    
-    
-
+    //This is the on-click event for any elment inside the table.
     let target=$(evt.target);
     //We will follow the execution only if the user clicked on an <img> element.
     //This way we avoid below code to exeucte for <table> or an already faced up element <i>.
@@ -214,20 +208,6 @@ function setStarsNumberTo(numberOfStars){
 
 }
 
-// function setStarsNumberToXForElement(numberOfStars,element){
-//     let all_spans=$('#'+element).children('span');
-//     let counter=0;
-//     for (let span of all_spans){
-      
-//         if (counter<numberOfStars){
-//             span.outerHTML='<span class="fa fa-star checked"></span>';
-//             counter++;
-//         }
-//     }
-// }
-
-
-
 function haveYouWon(){
     let cardsUp=NumbersOfCardsFacingUp();
     return (cardsUp===16) ? true : false ;
@@ -241,6 +221,7 @@ function setBackgroundColorToRed(id,idPartner){
 }
 
 function amITheOnlyCardFacingUp(){
+
     let all_tr=$('#matrixCanvas').children('tr');
     let counter=0;
     for (let tr of all_tr){
@@ -255,7 +236,6 @@ function amITheOnlyCardFacingUp(){
         
     } 
     return counter==1? true : false ;
-
 }
 
 function NumbersOfCardsFacingUp(){
@@ -351,6 +331,8 @@ function selectPosition(){
 } 
 
 function getRandomIntInclusive(min, max) {
+    //This is the way in JavaScrip to get a random number between tow numbers 
+    //see MDN 
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
