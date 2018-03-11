@@ -47,20 +47,28 @@
 
         <table id="matrixCanvas"></table>
 
-        <dialog id="victoryModalDialog" title="">
-                     
-                   <h3>Congratulations, you won.!!!</h3>
-                   <p>It took you <span id="elapsedTime">0</span> seconds  to complete the game.</p>
-                   <span id="numberOfMovesDialog" class="moves">0</span> Moves
-                   <section id="starsId" class="stars">
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                    </section>
-                   <p> Do you want to play again?</p>
-                   <button id="closeDialog">No</button> <button id="restartDialog" autofocus>Yes</button>
+        <dialog id="victoryModalDialog" class="site-dialog">
+
+                   <header class="dialog-header">
+                        <h3>Congratulations, you won.!!!</h3>
+                    </header> 
+
+                   <div class="dialog-content">
+                        <p>It took you <span id="elapsedTime">0</span> seconds  to complete the game.</p>
+                        <span id="numberOfMovesDialog" class="moves">0</span> Moves
+                        <section id="starsId" class="stars">
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </section>
+                        <p> Do you want to play again?</p>
+                   </div>
+
+                   <div class="dialog-btn-group">
+                            <button id="closeDialog" class="btn btn-close">No</button> <button id="restartDialog"  class="btn btn-danger" autofocus>Yes</button>
+                   </div>
 
         </dialog>
         
