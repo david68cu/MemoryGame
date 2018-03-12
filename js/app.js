@@ -56,6 +56,8 @@ $('#matrixCanvas').on( 'click', function( evt ) {
                     //If we are here there are 0 , 2, 4, 6, 8 , 10 , 12 or 14 
                     AssignImageToCard(idOfElementClicked,iconName);
                     increaseMoves();
+                    // 
+                    setStars(numberOfMoves);
                     break;
                 case 1:
                 //there is already one possible partner .let see if it is indeed a match
@@ -65,6 +67,7 @@ $('#matrixCanvas').on( 'click', function( evt ) {
                         //Set our background to red .We matched!!
                         increaseMoves();
                         setBackgroundColorToRed(lastCardTurnedUp,id);
+                        setStars(numberOfMoves);
                         if (haveYouWon()){
                             endTime=Date.now();
                             var elapsedTime=endTime-startTime;
@@ -81,6 +84,7 @@ $('#matrixCanvas').on( 'click', function( evt ) {
                         $('#position_'+lastCardTurnedUp).children('div').prepend(imageNode);
                         //Also I do not need the prior card for anything 
                         increaseMoves();
+                        setStars(numberOfMoves);
                     }
             
 
@@ -127,8 +131,50 @@ function victoryMessage(){
 
 function increaseMoves(){
     numberOfMoves++;
-    if (numberOfMoves==1){startTime=Date.now();}
+    if (numberOfMoves==1){
+        //We take this point as start point for our time measurement
+        //We set the global variable startTime with the first Click or increase of the move
+        //this value will be used to show the user the time elapsed in the <dialog> element
+        startTime=Date.now();
+        //We also need to show the time in the panel.It will be showing the time during the 
+        //duration of the game.For that we will use a function expresion and 
+        //x is a global variable so we just set its value here but defined it in a global space
+        //It is this way so we can later call clearInterval function that needs x as parameter 
+        //to be call when the game finishs
+
+        x = setInterval(function() {
+
+            // Get todays date and time
+            var now = new Date().getTime();
+          
+            // Find the distance between now an the count down date
+            var distance = now-startTime;
+          
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          
+            // Display the result in the element with id="demo"
+            document.getElementById("timerId").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+          
+            //We call clearInterval() from the method that detect if we have won to stop the timer.
+            // If the count down is finished, write some text 
+            if (haveYouWon()) {
+                clearInterval(x);
+                document.getElementById("timerId").innerHTML = "YOU WON";
+              }
+            
+          }, 1000);
+    }
+
     setMoves(numberOfMoves);
+}
+
+function setStarsScorePanel(moves){
+    $('#numberOfMoves').text(moves);
 }
 
 function setMoves(moves){
@@ -195,16 +241,60 @@ function setNumberOfStars(stars){
 }
 
 function setStarsNumberTo(numberOfStars){
-    let all_spans=$('#starsId').children('span');
+    //In the Panel , we start with all starts checked and they will get unchecked 
+    //when we keep increase move.So we need to uncheck them.The initialstatus is checked
+    let numberOfStarsToToggleOff=5-numberOfStars;
+    toggleStarsFromPanel(numberOfStarsToToggleOff);
+
+    //In the <dialog> elemnet   , we start with all starts Unchecked .
+    //We wil  turn them to checked depending on how many moves we have played.
+    //As the dialog show only if we have won so we will do this only if we have won
+    if (haveYouWon()){
+        all_spans=$('#starsId').children('span');
+        counter=0;
+        for (let span of all_spans){
+        
+            if (counter<numberOfStars){
+                span.outerHTML='<span class="fa fa-star checked"></span>';
+                counter++;
+            }
+        }
+    }
+}
+
+
+function toggleStarsFromPanel(starsToToggleOff){
+    //This is for the panel 
+    //We alwasy need to be certin that all stars are on so we cna atoggle those we need to toggle
+    setAllStarsInThePanelToON();
+    //Now that all stars are ON , we will toggle off those we need to turn off
+    toggleXStarsFromPanel(starsToToggleOff);
+}
+
+function toggleXStarsFromPanel(starsToToggle){
+    let all_spans=$('#starsIdScorePanel').children('span');
     let counter=0;
+     
     for (let span of all_spans){
-      
-        if (counter<numberOfStars){
+        if (counter<starsToToggle){
+            //span.classList.toggle("checked");
+            span.outerHTML='<span class="fa fa-star"></span>';
+            counter++;
+        }
+    }
+
+}
+
+function setAllStarsInThePanelToON(){
+    let all_spans=$('#starsIdScorePanel').children('span');
+    let counter=0;
+
+    for (let span of all_spans){
+        if (counter<5){
             span.outerHTML='<span class="fa fa-star checked"></span>';
             counter++;
         }
     }
-    
 
 }
 
@@ -365,6 +455,10 @@ function AssignImageToCard(td_id ,icon){
 
 var lastCardTurnedUp=-1;
 var startTime=0;
+//Here we will store a function.So it will be a function expression 
+//That will call the setInterval() Browser function. We also will need to call later 
+//the clearInterval() function that will need as parameter x in another point of the program
+var x=0;
 var numberOfMoves=0;
 setStars(0);
 makeGrid();
