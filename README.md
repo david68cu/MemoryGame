@@ -24,12 +24,12 @@ At the end of the game , a dialog box will show you how much time has elapsed si
 
 ##Starts
 
-Whe you star the game you are granted a 5 five star rating ( but you need to arrive to at least 16 move , as nobody can win this game in less than 16 moves).So once you arrive to 16 moves you are grnated 5 stars. The stars will be reduced depending on how many moves it will take you to solve the game
+Whe you star the game you are granted a 5 five star rating ( but you need to arrive to at least 16 clicks (8 moves) , as nobody can win this game in less than 16 clicks).So once you arrive to 16 clicks(8 moves) you are granted 5 stars. The stars will be reduced depending on how many clicks will take you to solve the game.
 
 Example:
 
-From 16-25 moves : 5 stats
-From 26-35 moves : 4 stars
+From 16-25 clicks : 5 stats
+From 26-35 clicks : 4 stars
 and so on ..
 
 Once you win a dialog will hsow how many stars you got 
@@ -38,8 +38,8 @@ Also ,the stars will show in the panel
 #Restarting the game
   Once you win , you can restart the game , cliked on Yes when asked
   Also you can restart the game any time , by cliking in the restart buttom in the panel
-   
+
 ##Help
-See the video that will show you how to play the game
+We have updated a video to show the game with all the new features
 
 

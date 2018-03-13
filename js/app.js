@@ -178,9 +178,15 @@ function setStarsScorePanel(moves){
 }
 
 function setMoves(moves){
-    
-    $('#numberOfMoves').text(moves);
-    $('#numberOfMovesDialog').text(moves);
+    //We will display only 1 move for each pair of clicks
+    //As moves contians at this point the total number of clicks 
+    //lets calculate the module 
+    if (moves%2==0) {
+        let movesToPrint=moves/2;
+        $('#numberOfMoves').text(movesToPrint);
+        $('#numberOfMovesDialog').text(movesToPrint);
+    }
+ 
 
 }
 
